@@ -42,7 +42,8 @@ router.post("/login", (req, res) => {
       res.status(200).send(auth);
     })
     .catch(err => {
-      res.status(400).send(err);
+      console.log("error message in login", err);
+      res.status(404).send(err);
     });
 });
 
@@ -58,8 +59,8 @@ router.use(function(req, res, next) {
         message: "No token provided."
       });
     }
-    // verifies secret and checks exp
-    jwt.verify(bearer, config.secret, function(err, decoded) {
+    // verifies secret
+    jwt.verify(bearer, config.secret, (err, decoded) => {
       if (err) {
         return res.json({
           success: false,
@@ -84,7 +85,7 @@ router.get("/protected", (req, res) => {
 
 router.get("/next", (req, res) => {
   const token = req.headers[AUTHORIZATION];
-  // Increment integer by one
+  // increment integer by one
   user
     .incrementInteger(token)
     .then(data => res.status(200).send({ integer: data.integer }))
@@ -93,8 +94,6 @@ router.get("/next", (req, res) => {
 
 router.get("/current", (req, res) => {
   const token = req.headers[AUTHORIZATION];
-  console.log("get/current token:", token);
-
   // retrieve current integer
   user
     .getCurrentInteger(token)
@@ -105,7 +104,6 @@ router.get("/current", (req, res) => {
 router.put("/current", (req, res) => {
   const newInt = req.body.current;
   const token = req.headers[AUTHORIZATION];
-
   // reset current integer
   user
     .resetInteger(token, newInt)

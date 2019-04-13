@@ -19,7 +19,7 @@ const register = (email, password) => {
     // Validate email format
     const validEmail = validateEmail(email);
     if (!validEmail) {
-      return reject("Email address is invalid.");
+      return reject("Email format is incorrect.");
     }
 
     // Validate password length
@@ -66,20 +66,20 @@ const authenticate = (email, password) => {
     // Validate email format
     const validEmail = validateEmail(email);
     if (!validEmail) {
-      return reject("Email format incorrect");
+      return reject("Incorrect email format. Please try again.");
     }
 
     // Find user in db with email
     User.findOne({ email }, (err, user) => {
       if (err) {
-        return reject("Error: ", err);
+        return reject(err);
       }
       if (!user) {
-        return reject("User with this email is not found!");
+        return reject("Invalid login credentials");
       } else {
         const passwordValid = bcrypt.compareSync(password, user.password);
         if (!passwordValid) {
-          return reject("password incorrect");
+          return reject("Unable to validate user credentials. Please try again.");
         }
         let token = jwt.sign({ id: user._id }, config.secret, {
           expiresIn: 86400
