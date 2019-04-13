@@ -53,11 +53,11 @@ router.post("/login", (req, res) => {
 
 router.use(function(req, res, next) {
   // check header or url parameters or post parameters for token
-  const token = req.body.token || req.query.token || req.headers[AUTHORIZATION];
-  console.log("body.toekn", req.body.token);
-  console.log("query.token", req.query.token);
+  const token = req.headers[AUTHORIZATION];
+  // console.log("body.toekn", req.body.token);
+  // console.log("query.token", req.query.token);
   console.log("req.header authorization", req.headers[AUTHORIZATION]);
-  console.log("req.header x-access", req.headers["x-access-token"]);
+  // console.log("req.header x-access", req.headers["x-access-token"]);
   console.log("req.header", req.headers);
 
   // decode token
@@ -97,16 +97,16 @@ router.get("/protected", (req, res) => {
 });
 
 router.get("/next", (req, res) => {
-  const token = req.body.token || req.query.token || req.headers[AUTHORIZATION];
+  const token = req.headers[AUTHORIZATION];
   // Increment integer by one
   user
     .incrementInteger(token)
-    .then(() => res.status(200).send("Incremented!"))
+    .then(data => res.status(200).send({ integer: data.integer }))
     .catch(err => res.status(404).send(err));
 });
 
 router.get("/current", (req, res) => {
-  const token = req.body.token || req.query.token || req.headers[AUTHORIZATION];
+  const token = req.headers[AUTHORIZATION];
   console.log("get/current token:", token);
 
   // Increment integer by one
@@ -117,13 +117,14 @@ router.get("/current", (req, res) => {
 });
 
 router.put("/current", (req, res) => {
-  const newInt = req.body.int;
-  const token = req.body.token || req.query.token || req.headers[AUTHORIZATION];
+  console.log("Body current?/", req.body.current);
+  const newInt = req.body.current;
+  const token = req.headers[AUTHORIZATION];
 
   // Increment integer by one
   user
     .resetInteger(token, newInt)
-    .then(data => res.status(200).send(data))
+    .then(data => res.status(200).send({ integer: data.integer}))
     .catch(err => res.status(404).send(err));
 });
 

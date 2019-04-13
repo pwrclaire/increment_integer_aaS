@@ -11,7 +11,7 @@ Login user:
 `curl -d "email=<email>&password=<password>" -X POST https://thinkific-server.herokuapp.com/api/user/login`
 
 A bearer token will return once login is successful
-`"Bearer xxxxxxxx"`
+`"Bearer xxxxxxxxxx"`
 Please copy this Bearer token (without quotes) to your clipboard
 
 To display current integer
@@ -23,7 +23,7 @@ To increment current integer
 A successful response will be a string of 'Incremented!'
 
 To reset integer
-`curl -X PUT https://thinkific-server.herokuapp.com/api/user/current -X "Authorization: {paste copied Bearer token" --data "current={integer}"`
+`curl -X PUT https://thinkific-server.herokuapp.com/api/user/current -X "Authorization: {paste copied Bearer token here}" --data "current={integer}"`
 
 ## UI Access
 
