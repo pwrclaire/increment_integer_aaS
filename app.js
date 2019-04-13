@@ -1,12 +1,11 @@
 const express = require("express");
-const cors = require("cors");
 const app = express();
+const cors = require("cors");
 app.use(cors());
 const db = require("./db");
 db.connect();
 
-app.use(function(req, res, next) {
-  console.log("appjs app use");
+app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Methods", "GET, PUT, POST, DELETE, OPTIONS");
   res.header(

@@ -1,4 +1,3 @@
-// Backend functions for manipulating data and stuff
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const User = require("../model/User");
@@ -26,21 +25,19 @@ const register = (email, password) => {
     // Validate password length
     const validPassword = validatePassword(password);
     if (!validPassword) {
-      reject("Please enter at least 6 characters for your password");
-      return;
+      return reject("Please enter at least 6 characters for your password");
     }
 
     // Hash user password
     const hashedPassword = bcrypt.hashSync(password, 8);
     User.findOne({ email: email }, (err, user) => {
       if (err) {
-        reject("An error has occured: ", err);
-        return;
+        return reject("An error has occured: ", err);
       }
       if (user) {
-        console.log("SHould break..same email used");
-        reject("This email has been taken, please use a different email.");
-        return;
+        return reject(
+          "This email has been taken, please use a different email."
+        );
       } else {
         User.create(
           {
@@ -50,15 +47,13 @@ const register = (email, password) => {
           },
           (err, user) => {
             if (err) {
-              reject("Error:", err);
-              return;
+              return reject("Error:", err);
             }
-            console.log("Register function: user: ", user);
-            resolve(user);
+            return resolve(user);
           }
         );
       }
-    })
+    });
   });
 };
 
@@ -69,10 +64,10 @@ const authenticate = (email, password) => {
     }
 
     // Validate email format
-    // const validEmail = validateEmail(email);
-    // if (!validEmail) {
-    //   return reject("Email format incorrect");
-    // }
+    const validEmail = validateEmail(email);
+    if (!validEmail) {
+      return reject("Email format incorrect");
+    }
 
     // Find user in db with email
     User.findOne({ email }, (err, user) => {
@@ -84,7 +79,7 @@ const authenticate = (email, password) => {
       } else {
         const passwordValid = bcrypt.compareSync(password, user.password);
         if (!passwordValid) {
-         return reject("password incorrect");
+          return reject("password incorrect");
         }
         let token = jwt.sign({ id: user._id }, config.secret, {
           expiresIn: 86400
@@ -100,13 +95,12 @@ const incrementInteger = token => {
   return new Promise((resolve, reject) => {
     const bearer = parseBearer(token);
     if (!bearer) {
-      return reject("Unable to parse token.")
+      return reject("Unable to parse token.");
     }
     jwt.verify(bearer, config.secret, (err, decoded) => {
       if (err) {
-        return reject("Unable to decode");
+        return reject("Unable to decode token");
       } else {
-        console.log("backend-function: increment**** decoded", decoded);
         const userId = decoded.id;
         User.findOneAndUpdate(
           { _id: userId },
@@ -114,7 +108,7 @@ const incrementInteger = token => {
           { new: true },
           (err, response) => {
             if (err) {
-             return reject(err);
+              return reject(err);
             } else {
               return resolve(response);
             }
@@ -129,20 +123,17 @@ const getCurrentInteger = token => {
   return new Promise((resolve, reject) => {
     const bearer = parseBearer(token);
     if (!bearer) {
-      return reject("Unable to parse token.")
+      return reject("Unable to parse token.");
     }
-    console.log("backnend-function getCurrentInteger**** bearer", bearer);
     jwt.verify(bearer, config.secret, (err, decoded) => {
       if (err) {
         return reject("Unable to decode");
       } else {
-        console.log("Backed-function getcurrentInteger***** got jwt", decoded);
         const userId = decoded.id;
         User.findOne({ _id: userId }, (err, data) => {
           if (err) {
-           return reject(err);
+            return reject(err);
           } else {
-            console.log("backend-user-function**** data:", data);
             return resolve(data);
           }
         });
@@ -155,29 +146,27 @@ const resetInteger = (token, int) => {
   return new Promise((resolve, reject) => {
     const bearer = parseBearer(token);
     if (!bearer) {
-      return reject("Unable to parse token.")
+      return reject("Unable to parse token.");
     }
     const validInteger = validateInteger(int);
-    if(!validInteger) {
-      return reject("Please enter a positive integer!")
+    if (!validInteger) {
+      return reject("Please enter a positive integer!");
     }
     jwt.verify(bearer, config.secret, (err, decoded) => {
       if (err) {
-        reject("Unable to decode");
-        return;
+        return reject("Unable to decode");
       } else {
         console.log(decoded);
         const userId = decoded.id;
         User.findOneAndUpdate(
           { _id: userId },
-          { $set: { integer: int }},
-          { new: true},
+          { $set: { integer: int } },
+          { new: true },
           (err, data) => {
             if (err) {
-              reject(err);
-              return;
+              return reject(err);
             } else {
-              resolve(data);
+              return resolve(data);
             }
           }
         );

@@ -1,4 +1,3 @@
-// config.js
 module.exports = {
-  secret: "supersecret"
+  secret: "thinkificsecret"
 };
