@@ -1,8 +1,8 @@
-# Integer Fetcher!
+# Increment Integer as a Service
 
-Welcome to Increment Integer as a Service!
+API for IIaaS
 
-## CRUL Commands
+## CURL Commands
 
 Register new user:
 `curl -d "email=<email>&password=<password>" -X POST https://thinkific-server.herokuapp.com/api/user/register`
