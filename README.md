@@ -5,7 +5,7 @@ API for IIaaS
 ## CURL Commands
 
 Register new user:
-`curl -d "email=<email>&password=<password>" -X POST https://thinkific-server.herokuapp.com/api/user/register`
+```curl -d "email=<email>&password=<password>" -X POST https://thinkific-server.herokuapp.com/api/user/register```
 
 Login user:
 `curl -d "email=<email>&password=<password>" -X POST https://thinkific-server.herokuapp.com/api/user/login`
