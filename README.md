@@ -42,5 +42,7 @@ https://increment-integer.herokuapp.com
 ### Technologies use
 
 Frontend: React
+
 Backend: Node.js
+
 DB: MongoDB
