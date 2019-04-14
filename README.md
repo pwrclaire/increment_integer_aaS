@@ -16,7 +16,7 @@ curl -d "email=<email>&password=<password>" -X POST https://thinkific-server.her
 
 A bearer token will return once login is successful
 ```
-auth: true, Authorization: **Bearer xxxxxxxxxx**
+auth: true, Authorization: __Bearer xxxxxxxxxx__
 ```
 Please copy only the Bearer token (with the word Bearer) to your clipboard
 
