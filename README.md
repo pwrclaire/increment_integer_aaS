@@ -39,7 +39,7 @@ curl -X PUT https://thinkific-server.herokuapp.com/api/user/current -X "Authoriz
 
 https://increment-integer.herokuapp.com
 
-### Technologies use
+### Technologies used
 
 Frontend: React
 
