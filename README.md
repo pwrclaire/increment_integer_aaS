@@ -3,6 +3,7 @@
 API for IIaaS
 
 ## CURL Commands
+> *Note: If you are using Windows, please make sure you have curl installed.*
 
 Register new user:
 ```
