@@ -2,7 +2,7 @@
 
 RESTful API written in Node.js
 
-## CURL Commands
+## cURL Commands
 
 Register new user:
 ```
