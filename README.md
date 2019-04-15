@@ -36,6 +36,19 @@ To reset integer
 curl -X PUT https://thinkific-server.herokuapp.com/api/user/current -X "Authorization: paste copied Bearer token here" --data "current={integer}"
 ```
 
+## Run Locally
+
+Install node packages using
+
+```
+npm install
+```
+
+Then run
+```
+npm start
+```
+
 ## IIaaS Webiste
 
 https://increment-integer.herokuapp.com
