@@ -49,7 +49,7 @@ Then run
 npm start
 ```
 
-## IIaaS Webiste
+## Web Demo
 
 https://increment-integer.herokuapp.com
 
