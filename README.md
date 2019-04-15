@@ -1,9 +1,8 @@
 # Increment Integer as a Service
 
-API for IIaaS
+RESTful API written in Node.js
 
 ## CURL Commands
-> *Note: If you are using Windows, please make sure you have curl installed.*
 
 Register new user:
 ```
